@@ -1,4 +1,4 @@
-package org.bomz.sts.dragon;
+package org.bomz.sts.ftlsoundtrack;
 
 import basemod.interfaces.PostDrawSubscriber;
 import com.megacrit.cardcrawl.cards.AbstractCard;

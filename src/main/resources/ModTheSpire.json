@@ -1,10 +1,10 @@
 {
-  "modid": "example",
-  "name": "Kiryu",
-  "author_list": ["Nooblord", "Nooblord 2"],
-  "description": "majima when",
+  "modid": "ftlsoundtrack",
+  "name": "FTL Soundtrack",
+  "author_list": ["Nate Rook"],
+  "description": "Swaps out Slay the Spire's soundtrack for FTL's.",
   "version": "0.1",
-  "sts_version": "03-29-2018",
+  "sts_version": "07-14-2019",
   "mts_version": "2.6.0",
   "dependencies": ["basemod"]
 }

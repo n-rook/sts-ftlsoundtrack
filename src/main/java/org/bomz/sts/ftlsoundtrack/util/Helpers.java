@@ -1,4 +1,4 @@
-package org.bomz.sts.dragon.util;
+package org.bomz.sts.ftlsoundtrack.util;
 
 /**
  * Contains static methods
