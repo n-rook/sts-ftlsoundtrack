@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.bomz.sts.ftlsoundtrack</groupId>
+    <artifactId>sts-dragon</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <steam.path>C:/Program Files (x86)/Steam/steamapps</steam.path>
+        <steam.path.sts>${steam.path}/common/SlayTheSpire</steam.path.sts>
+        <steam.path.stsworkshop>${steam.path}/workshop/content/646570</steam.path.stsworkshop>
+        <steam.path.moddirectory>${steam.path.sts}/mods</steam.path.moddirectory>
+    </properties>
+
+    <dependencies>
+        <!-- On your machine, you'll have to fix these paths manually. Sorry. -->
+        <dependency>
+            <groupId>com.megacrit.cardcrawl</groupId>
+            <artifactId>slaythespire</artifactId>
+            <version>016</version>
+            <scope>system</scope>
+            <systemPath>${steam.path.sts}/desktop-1.0.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>basemod</groupId>
+            <artifactId>basemod</artifactId>
+            <version>2.19.0</version>
+            <scope>system</scope>
+            <systemPath>${steam.path.stsworkshop}/1605833019/BaseMod.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>StSLib</groupId>
+            <artifactId>StSLib</artifactId>
+            <version>1.0.1</version>
+            <scope>system</scope>
+            <systemPath>${steam.path.stsworkshop}/1609158507/StSLib.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.evacipated.cardcrawl</groupId>
+            <artifactId>ModTheSpire</artifactId>
+            <version>2.9.1</version>
+            <scope>system</scope>
+            <systemPath>${steam.path.stsworkshop}/1605060445/ModTheSpire.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <directory>${steam.path.moddirectory}</directory>
+
+        <finalName>ExampleMod</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <copy file="target/ExampleMod.jar" tofile="../lib/ExampleMod.jar"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
