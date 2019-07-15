@@ -12,12 +12,15 @@ import com.badlogic.gdx.audio.Music;
  * MusicMaster.
  *
  * But, if you want to do the awesome dual fade thing, you have to use this class.
+ *
+ * Notes on FTL's soundtrack:
+ *
+ * When "new" songs come in, they just play after a short moment of silence.
  */
 public class MusicController {
 
   private static MusicController _instance;
-  private MusicSupplier.Song currentSong;
-  private Music currentAudio;
+  private MusicBeingPlayed currentAudio;
 
   /**
    * Get the singleton instance.
@@ -33,45 +36,57 @@ public class MusicController {
 
   public MusicController(MusicSupplier supplier) {
     this.supplier = supplier;
+
   }
 
   /**
    * Play a single song, in both "intense" and "relaxed" settings.
    */
   public void playSingleBGM(MusicSupplier.Song song) {
-    Music wasPlaying = currentAudio;
-
-    // TODO consider fading out
-
-    currentAudio = supplier.get(song);
-    // TODO volume
-    if (wasPlaying != null) {
-      wasPlaying.stop();
-    }
-    currentAudio.play();
-    if (wasPlaying != null) {
-      wasPlaying.dispose();
-    }
-
+    MusicBeingPlayed newAudio = MusicBeingPlayed.single(supplier.get(song));
+    this.stopExistingAudio();
+    this.currentAudio = newAudio;
+    this.currentAudio.start();
   }
 
   /**
    * Play one song in "intense" settings and the other in "relaxed" settings.
    */
   public void playModalBGM(MusicSupplier.Song relaxed, MusicSupplier.Song intense) {
-    // TODO
-    this.playSingleBGM(relaxed);
+    MusicBeingPlayed newAudio =
+        MusicBeingPlayed.joint(supplier.get(relaxed), supplier.get(intense));
+    this.stopExistingAudio();
+    this.currentAudio = newAudio;
+    this.currentAudio.start();
+  }
+
+  /**
+   * Called every frame.
+   */
+  public void update() {
+    if (this.currentAudio != null) {
+      this.currentAudio.update();
+    }
+  }
+
+  private void stopExistingAudio() {
+    // TODO: Figure out how to fade out gracefully here
+    if (this.currentAudio != null) {
+      this.currentAudio.stop();
+    }
   }
 
   /**
    * Switch from a "relaxed" to an "intense" setting.
    */
-  public void setMode() {
-    // TODO
+  public void setMode(MusicMode newMode) {
+    if (this.currentAudio != null) {
+      this.currentAudio.switchMode(newMode);
+    }
   }
 
   public enum MusicMode {
     RELAXED,
-    INTENSE;
+    INTENSE
   }
 }
