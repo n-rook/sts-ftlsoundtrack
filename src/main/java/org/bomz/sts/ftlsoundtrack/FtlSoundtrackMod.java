@@ -11,6 +11,7 @@ public class FtlSoundtrackMod {
 
     public static void initialize() {
       BaseMod.subscribe(new StringSubscriber());
+      BaseMod.subscribe(new TestSubscriber());
 
 //        new FtlSoundtrackMod();
 //        BaseMod.subscribe(new StringSubscriber());
