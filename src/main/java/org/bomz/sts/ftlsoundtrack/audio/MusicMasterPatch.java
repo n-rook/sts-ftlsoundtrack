@@ -5,6 +5,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.audio.MusicMaster;
+import org.bomz.sts.ftlsoundtrack.audio.MusicController.MusicMode;
 import org.bomz.sts.ftlsoundtrack.audio.MusicSupplier.Song;
 
 import static basemod.DevConsole.logger;
@@ -25,23 +26,40 @@ public class MusicMasterPatch {
       MusicController controller = MusicController.instance();
       switch (key) {
         case KEY_MENU:
-          controller.playSingleBGM(Song.TITLE);
+          controller.playSingleBGM(Song.TITLE, true);
           break;
         case KEY_EXORDIUM:
-          controller.playModalBGM(Song.CIVIL_EXPLORE, Song.CIVIL_BATTLE);
+          controller.playBGMQueue(Playlists.exordium(), MusicMode.RELAXED);
           break;
         case KEY_CITY:
-          controller.playModalBGM(Song.MILKY_WAY_EXPLORE, Song.MILKY_WAY_BATTLE);
+          controller.playBGMQueue(Playlists.city(), MusicMode.RELAXED);
           break;
         case KEY_BEYOND:
-          controller.playModalBGM(Song.COSMOS_EXPLORE, Song.COSMOS_BATTLE);
+          controller.playBGMQueue(Playlists.beyond(), MusicMode.RELAXED);
           break;
         case KEY_ENDING:
-          controller.playSingleBGM(Song.LAST_STAND);
+          controller.playSingleBGM(Song.LAST_STAND, true);
           break;
         default:
           logger.warn("Unknown music key, ignoring " + key);
           return SpireReturn.Return(null);
+      }
+
+      return SpireReturn.Return(null);
+    }
+  }
+
+
+  @SpirePatch(clz = MusicMaster.class, method = "playTempBgmInstantly", paramtypez = {
+      String.class, boolean.class
+  } )
+  public static class PlayTempBgmInstantlyLoopOverload {
+    @SpirePrefixPatch
+    public static SpireReturn playTempBgmInstantly(MusicMaster __instance, String key, boolean loop) {
+      if (key.contains("EndingStinger")) {
+        // The player won, so playing the victory stinger.
+        // You won!
+        MusicController.instance().playSingleBGM(Song.VICTORY, false);
       }
 
       return SpireReturn.Return(null);
@@ -85,16 +103,6 @@ public class MusicMasterPatch {
   public static class PlayPrecachedTempBgm {
     @SpirePrefixPatch
     public static SpireReturn playPrecachedTempBgm(MusicMaster __instance) {
-      return SpireReturn.Return(null);
-    }
-  }
-
-  @SpirePatch(clz = MusicMaster.class, method = "playTempBgmInstantly", paramtypez = {
-      String.class, boolean.class
-  } )
-  public static class PlayTempBgmInstantlyLoopOverload {
-    @SpirePrefixPatch
-    public static SpireReturn playTempBgmInstantly(MusicMaster __instance, String key, boolean loop) {
       return SpireReturn.Return(null);
     }
   }

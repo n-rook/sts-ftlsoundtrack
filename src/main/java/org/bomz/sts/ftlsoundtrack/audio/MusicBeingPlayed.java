@@ -42,8 +42,6 @@ public class MusicBeingPlayed {
     this.intense = intenseMusic;
     this.volume = getGameVolume();
     this.currentMode = MusicController.MusicMode.RELAXED;
-
-
   }
 
   public static MusicBeingPlayed single(Music music) {
@@ -54,21 +52,46 @@ public class MusicBeingPlayed {
     return new MusicBeingPlayed(relaxed, intense);
   }
 
+  public static MusicBeingPlayed joint(MusicSupplier.MusicPair pair) {
+    return new MusicBeingPlayed(pair.getRelaxed(), pair.getIntense());
+  }
+
   private static float getGameVolume() {
     return Settings.MUSIC_VOLUME * Settings.MASTER_VOLUME;
   }
 
+  /**
+   * Get the current mode.
+   *
+   * Notes:
+   * 1. If this is a single-mode song, the current mode is always RELAXED.
+   * 2. If we are transitioning to a new mode, the current mode is always the DESTINATION MODE.
+   */
+  public MusicController.MusicMode getCurrentMode() {
+    return currentMode;
+  }
+
   public void start() {
+    start(MusicController.MusicMode.RELAXED);
+  }
+
+  public void start(MusicController.MusicMode mode) {
     // TODO: fade in
-    // TODO: handle completion listener
-    if (intense != null) {
-      intense.setVolume(0.0F);
+    if (intense == null) {
+      relaxed.setVolume(volume);
+      relaxed.play();
+      return;
     }
-    relaxed.setVolume(volume);
-    if (intense != null) {
-      intense.play();
-    }
-    relaxed.play();
+
+    Music active = mode == MusicController.MusicMode.RELAXED ? relaxed : intense;
+    Music inactive = mode == MusicController.MusicMode.RELAXED ? intense : relaxed;
+
+    this.currentMode = mode;
+
+    active.setVolume(volume);
+    inactive.setVolume(0.0F);
+    active.play();
+    inactive.play();
   }
 
   public void stop() {
@@ -91,6 +114,27 @@ public class MusicBeingPlayed {
 
     this.currentMode = newMode;
     this.crossFadeTimer = CROSS_FADE_LENGTH;
+  }
+
+  /**
+   * Set whether this song should loop.
+   */
+  public void setLooping(boolean shouldLoop) {
+    relaxed.setLooping(shouldLoop);
+    if (this.intense != null) {
+      intense.setLooping(shouldLoop);
+    }
+  }
+
+  /**
+   * Set an OnCompletionListener.
+   *
+   * Note that this is implemented by setting the listener on the relaxed song. If the intense song
+   * is longer or shorter this is going to wind up being really weird. But it doesn't make sense
+   * for the two songs to be different lengths to begin with, so whatever :)
+   */
+  public void setOnCompletionListener(Music.OnCompletionListener listener) {
+    relaxed.setOnCompletionListener(listener);
   }
 
   // Called most frames. Updates music effects.
