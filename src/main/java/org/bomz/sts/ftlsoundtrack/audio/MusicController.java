@@ -158,11 +158,10 @@ public class MusicController {
       logger.info("Running onCompletion handler for audio");
       // TODO: dispose of currentAudio
 
-      MusicMode currentMode = this.currentAudio.getCurrentMode();
+      MusicBeingPlayed previousAudio = this.currentAudio;
       this.currentAudio = upNext;
-
-      // TODO: Consider a wait time here.
-      startCurrentAudio(currentMode);
+      startCurrentAudio(previousAudio.getCurrentMode());
+      previousAudio.dispose();
 
       if (this.queue.isEmpty()) {
         this.refillQueue();

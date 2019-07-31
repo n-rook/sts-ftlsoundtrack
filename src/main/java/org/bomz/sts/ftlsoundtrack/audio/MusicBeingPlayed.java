@@ -11,6 +11,7 @@ import com.megacrit.cardcrawl.core.Settings;
  * This is the equivalent of the built-in class "MainMusic".
  */
 public class MusicBeingPlayed {
+
   /**
    * If a single song is being played, that song.
    *
@@ -99,6 +100,13 @@ public class MusicBeingPlayed {
     relaxed.stop();
     if (intense != null) {
       intense.stop();
+    }
+  }
+
+  public void dispose() {
+    relaxed.dispose();
+    if (intense != null) {
+      intense.dispose();
     }
   }
 

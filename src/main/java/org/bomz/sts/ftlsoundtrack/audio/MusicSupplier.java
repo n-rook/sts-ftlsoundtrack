@@ -147,11 +147,6 @@ public class MusicSupplier {
     return new MusicPair(get(pair.getRelaxed()), get(pair.getIntense()));
   }
 
-  public void playMusic(Song song) {
-    Music music = MusicLoader.loadExternalMusic(song.getPath());
-    music.play();
-  }
-
   private enum Soundtrack {
     MAIN("FTL Soundtrack"),
     EXPANSION("FTL AE Soundtrack");
@@ -166,11 +161,4 @@ public class MusicSupplier {
     }
   }
 
-
-  private static String getPath(boolean isExpansion, String path) {
-    if (isExpansion) {
-      throw new RuntimeException("not added yet");
-    }
-    return String.format("%s\\FTL Soundtrack\\%s.mp3", FTL_PATH, path);
-  }
 }
