@@ -10,6 +10,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.*;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static basemod.BaseMod.logger;
@@ -85,7 +86,7 @@ public class MusicFileList {
       throw new CouldNotFindMusicException("Failed to load (not a directory)", subdirectory, e);
     }
 
-    HashMap<Song, File> songFiles = new HashMap<>();
+    HashMap<Song, Path> songFiles = new HashMap<>();
 
     try {
       fileWalk
@@ -106,7 +107,7 @@ public class MusicFileList {
           return;
         }
 
-        songFiles.put(song, path.toFile());
+        songFiles.put(song, path);
       });
     } catch (UncheckedIOException e) {
       if (e.getCause() instanceof AccessDeniedException) {
@@ -134,6 +135,19 @@ public class MusicFileList {
 
     // Note: We already got the music files.
     return new MusicFileList(songFiles);
+  }
+
+  /**
+   * Initialize a MusicFileList from a list of paths.
+   * @throws IOException if a file cannot be read.
+   */
+  public static MusicFileList initializeFromPaths(Map<Song, Path> files) throws IOException {
+    for (Path f: files.values()) {
+      if (!Files.isReadable(f)) {
+        throw new IOException(String.format("Cannot read file %s", f));
+      }
+    }
+    return new MusicFileList(files);
   }
 
   private static Song getMatchingSongOrNull(Path path) {
@@ -164,19 +178,26 @@ public class MusicFileList {
     }
   }
 
-  private final Map<Song, File> files;
+  private final Map<Song, Path> files;
 
-  public MusicFileList(Map<Song, File> files) {
+  public MusicFileList(Map<Song, Path> files) {
     for (Song song: Song.values()) {
       if (!files.containsKey(song)) {
         throw new IllegalArgumentException("Cannot create a MusicFileList missing " + song.name());
       }
     }
 
-    this.files = files;
+    this.files = Collections.unmodifiableMap(
+        files.entrySet().stream()
+            .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().toAbsolutePath())));
   }
 
-  public File get(Song song) {
+  /**
+   * Get the path of a file. Always returns successfully.
+   *
+   * Paths in MusicFileList are always absolute.
+   */
+  public Path get(Song song) {
     return files.get(song);
   }
 }

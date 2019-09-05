@@ -16,7 +16,6 @@ public class MusicLoader {
     }
 
     return Gdx.audio.newMusic(Gdx.files.absolute(path));
-//    return Gdx.audio.newMusic(Gdx.files.absolute(getPath(false, "bp_FTL_01_TitleScreen")));
   }
 
 

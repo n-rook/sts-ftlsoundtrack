@@ -11,6 +11,13 @@ public class FtlSoundtrackInitializer implements
 
   @Override
   public void receivePostInitialize() {
+    ModSettings.initialize();
+    ModSettings.getInstance().load();
+    // TODO: Actually use ModSettings to play music
+    // TODO: More gracefully handle failing to load music than just crashing utterly
+    // Probably log an error (since this is happening on initialization you get to see the error)
+    // and continue
+
     ModSettingsController.create();
   }
 

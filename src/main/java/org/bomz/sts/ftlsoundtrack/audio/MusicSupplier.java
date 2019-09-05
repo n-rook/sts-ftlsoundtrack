@@ -17,6 +17,10 @@ public class MusicSupplier {
   }
 
   public enum Song {
+    // Note that the names of these songs are used in the serialized configuration files.
+    // So don't change them!
+
+    // TODO: Delete song file names, they aren't used
     TITLE(Soundtrack.MAIN, "bp_FTL_01_TitleScreen"),
     MILKY_WAY_EXPLORE(Soundtrack.MAIN, "bp_FTL_02_MilkyWayEXPLORE"),
     CIVIL_EXPLORE(Soundtrack.MAIN, "bp_FTL_03_CivilEXPLORE"),
@@ -133,7 +137,7 @@ public class MusicSupplier {
   }
 
   /**
-   * Start streaming a song.
+   * Load and return a song to play.
    */
   public Music get(Song song) {
     logger.info("Loading song " + song.getPath());
@@ -141,7 +145,7 @@ public class MusicSupplier {
   }
 
   /**
-   * Start streaming a pair of songs.
+   * Load and return a pair of songs.
    */
   public MusicPair get(SongPair pair) {
     return new MusicPair(get(pair.getRelaxed()), get(pair.getIntense()));
@@ -160,5 +164,4 @@ public class MusicSupplier {
       return this.subdirectory;
     }
   }
-
 }

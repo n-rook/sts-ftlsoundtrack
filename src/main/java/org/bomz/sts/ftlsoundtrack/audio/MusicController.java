@@ -115,9 +115,14 @@ public class MusicController {
     // Entire list (as a list of SongPairs)
 
     private final MusicSupplier supplier;
+    // The song currently being played.
     private MusicBeingPlayed currentAudio;
+    // The song that will be played next.
     private MusicBeingPlayed upNext;
+    // The rest of the songs that will be played, in order.
     private ArrayList<MusicSupplier.SongPair> queue;
+    // All songs that are a part of this playlist. This exists because the playlist will repeat
+    // in a different order after all songs are played.
     private final ArrayList<MusicSupplier.SongPair> fullPlaylist;
 
     public SongPlaylist(MusicSupplier supplier, MusicBeingPlayed first, MusicBeingPlayed second, ArrayList<MusicSupplier.SongPair> queue, ArrayList<MusicSupplier.SongPair> fullPlaylist) {
@@ -174,6 +179,7 @@ public class MusicController {
     private void refillQueue() {
       this.queue.clear();
 
+      // TODO: It would be nice to prohibit repeated songs.
       ArrayList<MusicSupplier.SongPair> newQueue = new ArrayList<>(this.fullPlaylist);
       Collections.shuffle(newQueue);
       this.queue.addAll(newQueue);

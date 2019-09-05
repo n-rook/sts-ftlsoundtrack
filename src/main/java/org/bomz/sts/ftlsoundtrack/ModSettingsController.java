@@ -31,8 +31,10 @@ public class ModSettingsController {
 
   private boolean initialized = false;
   private ModLabel statusLabel;
+  private final ModSettings settings;
 
-  public ModSettingsController() {
+  public ModSettingsController(ModSettings settings) {
+    this.settings = settings;
   }
 
   private void initialize(ModLabel statusLabel) {
@@ -94,6 +96,7 @@ public class ModSettingsController {
   }
 
   private void recordSuccess(MusicFileList list) {
+    settings.save(list);
     String firstSong = list.get(MusicSupplier.Song.TITLE).toString();
     this.setStatus("Music files successfully loaded:\n" + firstSong);
   }
@@ -118,10 +121,11 @@ public class ModSettingsController {
 
   /**
    * Creates and registers a mod settings page for this mod.
-   * @return
+   *
+   * Requires ModSettings be initialized.
    */
   public static ModSettingsController create() {
-    ModSettingsController controller = new ModSettingsController();
+    ModSettingsController controller = new ModSettingsController(ModSettings.getInstance());
 
     ModPanel constructedPanel = new ModPanel((panel) -> {
       ArrayList<IUIElement> elements = new ArrayList<>();
