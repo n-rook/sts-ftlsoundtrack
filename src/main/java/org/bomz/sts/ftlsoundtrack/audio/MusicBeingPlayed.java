@@ -27,7 +27,7 @@ public class MusicBeingPlayed {
   private final Music intense;
 
   // The current mode. If crossfading, this is the new mode.
-  private MusicController.MusicMode currentMode;
+  private DualMusicPlayer.MusicMode currentMode;
 
   // Game volume.
   private float volume;
@@ -42,7 +42,7 @@ public class MusicBeingPlayed {
     this.relaxed = relaxedMusic;
     this.intense = intenseMusic;
     this.volume = getGameVolume();
-    this.currentMode = MusicController.MusicMode.RELAXED;
+    this.currentMode = DualMusicPlayer.MusicMode.RELAXED;
   }
 
   public static MusicBeingPlayed single(Music music) {
@@ -68,15 +68,15 @@ public class MusicBeingPlayed {
    * 1. If this is a single-mode song, the current mode is always RELAXED.
    * 2. If we are transitioning to a new mode, the current mode is always the DESTINATION MODE.
    */
-  public MusicController.MusicMode getCurrentMode() {
+  public DualMusicPlayer.MusicMode getCurrentMode() {
     return currentMode;
   }
 
   public void start() {
-    start(MusicController.MusicMode.RELAXED);
+    start(DualMusicPlayer.MusicMode.RELAXED);
   }
 
-  public void start(MusicController.MusicMode mode) {
+  public void start(DualMusicPlayer.MusicMode mode) {
     // TODO: fade in
     if (intense == null) {
       relaxed.setVolume(volume);
@@ -84,8 +84,8 @@ public class MusicBeingPlayed {
       return;
     }
 
-    Music active = mode == MusicController.MusicMode.RELAXED ? relaxed : intense;
-    Music inactive = mode == MusicController.MusicMode.RELAXED ? intense : relaxed;
+    Music active = mode == DualMusicPlayer.MusicMode.RELAXED ? relaxed : intense;
+    Music inactive = mode == DualMusicPlayer.MusicMode.RELAXED ? intense : relaxed;
 
     this.currentMode = mode;
 
@@ -115,7 +115,7 @@ public class MusicBeingPlayed {
    *
    * If this song only has one mode, or if we are already in the desired mode, does nothing.
    */
-  public void switchMode(MusicController.MusicMode newMode) {
+  public void switchMode(DualMusicPlayer.MusicMode newMode) {
     if (this.intense == null || this.currentMode == newMode) {
       return;
     }
@@ -163,7 +163,7 @@ public class MusicBeingPlayed {
     float fadingOutVolume = Interpolation.fade.apply(
         this.volume, 0.0F, fadeProportion);
 
-    if (this.currentMode == MusicController.MusicMode.RELAXED) {
+    if (this.currentMode == DualMusicPlayer.MusicMode.RELAXED) {
       this.relaxed.setVolume(fadingInVolume);
       this.intense.setVolume(fadingOutVolume);
     } else {

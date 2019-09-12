@@ -21,25 +21,14 @@ import static basemod.DevConsole.logger;
  *
  * When "new" songs come in, they just play after a short moment of silence.
  */
-public class MusicController {
+public class DualMusicPlayer {
 
-  private static MusicController _instance;
   private MusicBeingPlayed singleBGM;
   private SongPlaylist playlist;
 
-  /**
-   * Get the singleton instance.
-   */
-  public static synchronized MusicController instance() {
-    if (_instance == null) {
-      _instance = new MusicController(MusicSupplier.getInstance());
-    }
-    return _instance;
-  }
-
   private final MusicSupplier supplier;
 
-  public MusicController(MusicSupplier supplier) {
+  public DualMusicPlayer(MusicSupplier supplier) {
     this.supplier = supplier;
   }
 

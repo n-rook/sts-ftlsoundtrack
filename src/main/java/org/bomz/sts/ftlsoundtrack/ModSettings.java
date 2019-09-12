@@ -113,4 +113,14 @@ public class ModSettings {
   public boolean areSongsLoaded() {
     return songs != null;
   }
+
+  /**
+   * Returns the currently loaded songs. Throws if no songs loaded.
+   */
+  public MusicFileList getSongs() {
+    if (songs == null) {
+      throw new RuntimeException("No songs loaded yet!");
+    }
+    return songs;
+  }
 }
