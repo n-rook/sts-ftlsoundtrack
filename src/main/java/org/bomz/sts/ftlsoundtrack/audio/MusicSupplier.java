@@ -2,114 +2,58 @@ package org.bomz.sts.ftlsoundtrack.audio;
 
 import com.badlogic.gdx.audio.Music;
 
-import static basemod.DevConsole.logger;
-
 public class MusicSupplier {
-  private static final String FTL_PATH =
-      "C:\\Program Files (x86)\\Steam\\steamapps\\common\\FTL Faster Than Light";
-
 
   public enum Song {
     // Note that the names of these songs are used in the serialized configuration files.
     // So don't change them!
+    TITLE(Soundtrack.MAIN),
+    MILKY_WAY_EXPLORE(Soundtrack.MAIN),
+    CIVIL_EXPLORE(Soundtrack.MAIN),
+    COSMOS_EXPLORE(Soundtrack.MAIN),
+    DEEPSPACE_EXPLORE(Soundtrack.MAIN),
+    DEBRIS_EXPLORE(Soundtrack.MAIN),
+    MANTIS_EXPLORE(Soundtrack.MAIN),
+    ENGI_EXPLORE(Soundtrack.MAIN),
+    COLONIAL_EXPLORE(Soundtrack.MAIN),
+    WASTELAND_EXPLORE(Soundtrack.MAIN),
+    ROCKMEN_EXPLORE(Soundtrack.MAIN),
+    VOID_EXPLORE(Soundtrack.MAIN),
+    ZOLTAN_EXPLORE(Soundtrack.MAIN),
 
-    // TODO: Delete song file names, they aren't used
-    TITLE(Soundtrack.MAIN, "bp_FTL_01_TitleScreen"),
-    MILKY_WAY_EXPLORE(Soundtrack.MAIN, "bp_FTL_02_MilkyWayEXPLORE"),
-    CIVIL_EXPLORE(Soundtrack.MAIN, "bp_FTL_03_CivilEXPLORE"),
-    COSMOS_EXPLORE(Soundtrack.MAIN, "bp_FTL_04_CosmosEXPLORE"),
-    DEEPSPACE_EXPLORE(Soundtrack.MAIN, "bp_FTL_05_DeepspaceEXPLORE"),
-    DEBRIS_EXPLORE(Soundtrack.MAIN, "bp_FTL_06_DebrisEXPLORE"),
-    MANTIS_EXPLORE(Soundtrack.MAIN, "bp_FTL_07_MantisEXPLORE"),
-    ENGI_EXPLORE(Soundtrack.MAIN, "bp_FTL_08_EngiEXPLORE"),
-    COLONIAL_EXPLORE(Soundtrack.MAIN, "bp_FTL_09_ColonialEXPLORE"),
-    WASTELAND_EXPLORE(Soundtrack.MAIN, "bp_FTL_10_WastelandEXPLORE"),
-    ROCKMEN_EXPLORE(Soundtrack.MAIN, "bp_FTL_11_RockmenEXPLORE"),
-    VOID_EXPLORE(Soundtrack.MAIN, "bp_FTL_12_VoidEXPLORE"),
-    ZOLTAN_EXPLORE(Soundtrack.MAIN, "bp_FTL_13_ZoltanEXPLORE"),
+    FEDERATION_BONUS(Soundtrack.MAIN),
 
-    FEDERATION_BONUS(Soundtrack.MAIN, "bp_FTL_14_BONUS_Federation"),
+    MILKY_WAY_BATTLE(Soundtrack.MAIN),
+    CIVIL_BATTLE(Soundtrack.MAIN),
+    COSMOS_BATTLE(Soundtrack.MAIN),
+    DEEPSPACE_BATTLE(Soundtrack.MAIN),
+    DEBRIS_BATTLE(Soundtrack.MAIN),
+    MANTIS_BATTLE(Soundtrack.MAIN),
+    ENGI_BATTLE(Soundtrack.MAIN),
+    COLONIAL_BATTLE(Soundtrack.MAIN),
+    WASTELAND_BATTLE(Soundtrack.MAIN),
+    ROCKMEN_BATTLE(Soundtrack.MAIN),
+    VOID_BATTLE(Soundtrack.MAIN),
+    ZOLTAN_BATTLE(Soundtrack.MAIN),
 
-    MILKY_WAY_BATTLE(Soundtrack.MAIN, "bp_FTL_15_MilkyWayBATTLE"),
-    CIVIL_BATTLE(Soundtrack.MAIN, "bp_FTL_16_CivilBATTLE"),
-    COSMOS_BATTLE(Soundtrack.MAIN, "bp_FTL_17_CosmosBATTLE"),
-    DEEPSPACE_BATTLE(Soundtrack.MAIN, "bp_FTL_18_DeepspaceBATTLE"),
-    DEBRIS_BATTLE(Soundtrack.MAIN, "bp_FTL_19_DebrisBATTLE"),
-    MANTIS_BATTLE(Soundtrack.MAIN, "bp_FTL_20_MantisBATTLE"),
-    ENGI_BATTLE(Soundtrack.MAIN, "bp_FTL_21_EngiBATTLE"),
-    COLONIAL_BATTLE(Soundtrack.MAIN, "bp_FTL_22_ColonialBATTLE"),
-    WASTELAND_BATTLE(Soundtrack.MAIN, "bp_FTL_23_WastelandBATTLE"),
-    ROCKMEN_BATTLE(Soundtrack.MAIN, "bp_FTL_24_RockmenBATTLE"),
-    VOID_BATTLE(Soundtrack.MAIN, "bp_FTL_25_VoidBATTLE"),
-    ZOLTAN_BATTLE(Soundtrack.MAIN, "bp_FTL_26_ZoltanBATTLE"),
+    LAST_STAND(Soundtrack.MAIN),
+    VICTORY(Soundtrack.MAIN),
 
-    LAST_STAND(Soundtrack.MAIN, "bp_FTL_27_LastStand"),
-    VICTORY(Soundtrack.MAIN, "bp_FTL_28_Victory"),
+    LANIUS_BATTLE(Soundtrack.EXPANSION),
+    LOST_SHIP_BATTLE(Soundtrack.EXPANSION),
+    SLUG_BATTLE(Soundtrack.EXPANSION),
+    HACKING_MALFUNCTION_BATTLE(Soundtrack.EXPANSION),
 
-    LANIUS_BATTLE(Soundtrack.EXPANSION, "Lanius (Battle)"),
-    LOST_SHIP_BATTLE(Soundtrack.EXPANSION, "Lost Ship (Battle)"),
-    SLUG_BATTLE(Soundtrack.EXPANSION, "Slug (Battle)"),
-    HACKING_MALFUNCTION_BATTLE(Soundtrack.EXPANSION, "Hacking Malfunction (Battle)"),
-
-    LANIUS_EXPLORE(Soundtrack.EXPANSION, "Lanius (Explore)"),
-    LOST_SHIP_EXPLORE(Soundtrack.EXPANSION, "Lost Ship (Explore)"),
-    SLUG_EXPLORE(Soundtrack.EXPANSION, "Slug (Explore)"),
-    HACKING_MALFUNCTION_EXPLORE(Soundtrack.EXPANSION, "Hacking Malfunction (Explore)"),
+    LANIUS_EXPLORE(Soundtrack.EXPANSION),
+    LOST_SHIP_EXPLORE(Soundtrack.EXPANSION),
+    SLUG_EXPLORE(Soundtrack.EXPANSION),
+    HACKING_MALFUNCTION_EXPLORE(Soundtrack.EXPANSION),
     ;
 
-    // Previous definitions:
-//    TITLE(Soundtrack.MAIN, "bp_FTL_01_TitleScreen"),
-//    MILKY_WAY_EXPLORE(Soundtrack.MAIN, "bp_FTL_02_MilkyWayEXPLORE"),
-//    CIVIL_EXPLORE(Soundtrack.MAIN, "bp_FTL_03_CivilEXPLORE"),
-//    COSMOS_EXPLORE(Soundtrack.MAIN, "bp_FTL_04_CosmosEXPLORE"),
-//    DEEPSPACE_EXPLORE(Soundtrack.MAIN, "bp_FTL_05_DeepspaceEXPLORE"),
-//    DEBRIS_EXPLORE(Soundtrack.MAIN, "bp_FTL_06_DebrisEXPLORE"),
-//    MANTIS_EXPLORE(Soundtrack.MAIN, "bp_FTL_07_MantisEXPLORE"),
-//    ENGI_EXPLORE(Soundtrack.MAIN, "bp_FTL_08_EngiEXPLORE"),
-//    COLONIAL_EXPLORE(Soundtrack.MAIN, "bp_FTL_09_ColonialEXPLORE"),
-//    WASTELAND_EXPLORE(Soundtrack.MAIN, "bp_FTL_10_WastelandEXPLORE"),
-//    ROCKMEN_EXPLORE(Soundtrack.MAIN, "bp_FTL_11_RockmenEXPLORE"),
-//    VOID_EXPLORE(Soundtrack.MAIN, "bp_FTL_12_VoidEXPLORE"),
-//    ZOLTAN_EXPLORE(Soundtrack.MAIN, "bp_FTL_13_ZoltanEXPLORE"),
-//
-//    FEDERATION_BONUS(Soundtrack.MAIN, "bp_FTL_14_BONUS_Federation"),
-//
-//    MILKY_WAY_BATTLE(Soundtrack.MAIN, "bp_FTL_15_MilkyWayBATTLE"),
-//    CIVIL_BATTLE(Soundtrack.MAIN, "bp_FTL_16_CivilBATTLE"),
-//    COSMOS_BATTLE(Soundtrack.MAIN, "bp_FTL_17_CosmosBATTLE"),
-//    DEEPSPACE_BATTLE(Soundtrack.MAIN, "bp_FTL_18_DeepspaceBATTLE"),
-//    DEBRIS_BATTLE(Soundtrack.MAIN, "bp_FTL_19_DebrisBATTLE"),
-//    MANTIS_BATTLE(Soundtrack.MAIN, "bp_FTL_20_MantisBATTLE"),
-//    ENGI_BATTLE(Soundtrack.MAIN, "bp_FTL_21_EngiBATTLE"),
-//    COLONIAL_BATTLE(Soundtrack.MAIN, "bp_FTL_22_ColonialBATTLE"),
-//    WASTELAND_BATTLE(Soundtrack.MAIN, "bp_FTL_23_WastelandBATTLE"),
-//    ROCKMEN_BATTLE(Soundtrack.MAIN, "bp_FTL_24_RockmenBATTLE"),
-//    VOID_BATTLE(Soundtrack.MAIN, "bp_FTL_25_VoidBATTLE"),
-//    ZOLTAN_BATTLE(Soundtrack.MAIN, "bp_FTL_26_ZoltanBATTLE"),
-//
-//    LAST_STAND(Soundtrack.MAIN, "bp_FTL_27_LastStand"),
-//    VICTORY(Soundtrack.MAIN, "bp_FTL_28_Victory"),
-//
-//    LANIUS_BATTLE(Soundtrack.EXPANSION, "Lanius (Battle)"),
-//    LOST_SHIP_BATTLE(Soundtrack.EXPANSION, "Lost Ship (Battle)"),
-//    SLUG_BATTLE(Soundtrack.EXPANSION, "Slug (Battle)"),
-//    HACKING_MALFUNCTION_BATTLE(Soundtrack.EXPANSION, "Hacking Malfunction (Battle)"),
-//
-//    LANIUS_EXPLORE(Soundtrack.EXPANSION, "Lanius (Explore)"),
-//    LOST_SHIP_EXPLORE(Soundtrack.EXPANSION, "Lost Ship (Explore)"),
-//    SLUG_EXPLORE(Soundtrack.EXPANSION, "Slug (Explore)"),
-//    HACKING_MALFUNCTION_EXPLORE(Soundtrack.EXPANSION, "Hacking Malfunction (Explore)"),
-//        ;
-
     private final Soundtrack soundtrack;
-    private final String path;
-    Song(Soundtrack soundtrack, String path) {
-      this.soundtrack = soundtrack;
-      this.path = path;
-    }
 
-    private String getPath() {
-      return String.format("%s\\%s\\%s.mp3", FTL_PATH, soundtrack.getSubdirectory(), path);
+    Song(Soundtrack soundtrack) {
+      this.soundtrack = soundtrack;
     }
   }
 
@@ -193,16 +137,7 @@ public class MusicSupplier {
   }
 
   private enum Soundtrack {
-    MAIN("FTL Soundtrack"),
-    EXPANSION("FTL AE Soundtrack");
-
-    private String subdirectory;
-    Soundtrack(String subdirectory) {
-      this.subdirectory = subdirectory;
-    }
-
-    private String getSubdirectory() {
-      return this.subdirectory;
-    }
+    MAIN,
+    EXPANSION
   }
 }

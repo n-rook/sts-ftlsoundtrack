@@ -28,16 +28,4 @@ public class MusicLoader {
   public static Music loadExternalMusic(Path path) {
     return loadExternalMusic(path.toString());
   }
-
-//  public void forcePlayMusic(Music m) {
-//    m.play();
-//  }
-//
-//  private static String getPath(boolean isExpansion, String path) {
-//    if (isExpansion) {
-//      throw new RuntimeException("not added yet");
-//    }
-//    return String.format("%s\\FTL Soundtrack\\%s.mp3", FTL_PATH, path);
-//  }
 }
-
