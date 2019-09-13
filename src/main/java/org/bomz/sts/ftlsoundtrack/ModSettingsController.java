@@ -97,7 +97,10 @@ public class ModSettingsController {
   private void recordSuccess(MusicFileList list) {
     settings.save(list);
     String firstSong = list.get(MusicSupplier.Song.TITLE).toString();
-    this.setStatus("Music files successfully loaded:\n" + firstSong);
+    this.setStatus(String.format(
+        "Successfully found music files. For example:\n%s\n" +
+            "Restart Slay the Spire to play new music.",
+        firstSong));
   }
 
   private void setStatus(String newStatus) {
