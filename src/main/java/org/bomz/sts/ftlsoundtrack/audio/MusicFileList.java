@@ -73,7 +73,12 @@ public class MusicFileList {
    * @throws CouldNotFindMusicException if some or all of the files can't be found.
    */
   public static MusicFileList initialize(String subdirectory) throws CouldNotFindMusicException {
-    return initialize(Paths.get(subdirectory));
+    try {
+      return initialize(Paths.get(subdirectory));
+    } catch (InvalidPathException e) {
+      throw new CouldNotFindMusicException(
+          "Failed to load (not a path)", subdirectory, e);
+    }
   }
 
   /**

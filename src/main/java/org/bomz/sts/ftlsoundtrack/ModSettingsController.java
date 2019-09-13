@@ -1,7 +1,6 @@
 package org.bomz.sts.ftlsoundtrack;
 
 import basemod.*;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import org.bomz.sts.ftlsoundtrack.audio.MusicFileList;
 import org.bomz.sts.ftlsoundtrack.audio.MusicScanners;
@@ -25,7 +24,7 @@ public class ModSettingsController {
   private static final float X_SPACER_BETWEEN_BUTTON_AND_LABEL = 200.0f;
   private static final float LABEL_X = 500.0f;
   private static final float FIRST_BUTTON_Y = 675.0f;
-  private static final float LABEL_Y = 400.0f;
+  private static final float LABEL_Y = 275.0f;
   private static final float Y_DIFFERENCE_BETWEEN_BUTTON_AND_LABEL = 45.0f;
   private static final float SPACER_Y = -100.0f;
 
@@ -157,7 +156,7 @@ public class ModSettingsController {
     });
 
     // TODO: don't use base mod badge for no reason
-    Texture badgeTexture = new Texture(Gdx.files.internal("img/BaseModBadge.png"));
+    Texture badgeTexture = new Texture("img/ftlsoundtrack/badge.png");
     BaseMod.registerModBadge(
         badgeTexture, "FTL Soundtrack", "Nathaniel Rook", "FTL!!!", constructedPanel);
     return controller;
