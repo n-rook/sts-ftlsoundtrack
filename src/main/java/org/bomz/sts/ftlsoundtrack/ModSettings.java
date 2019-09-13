@@ -87,6 +87,7 @@ public class ModSettings {
    * It seems like the most likely place, after all.
    */
   public void tryFirstTimeScan() {
+    logger.info("Conducting first-time Steam Library scan");
     MusicFileList files;
     try {
       files = MusicScanners.scanSteamLibrary();

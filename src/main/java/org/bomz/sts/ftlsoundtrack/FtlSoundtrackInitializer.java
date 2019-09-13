@@ -25,6 +25,10 @@ public class FtlSoundtrackInitializer implements
       logger.error("Failed to load settings!", e);
     }
 
+    if (!settings.areSongsLoaded()) {
+      settings.tryFirstTimeScan();
+    }
+
     // TODO: More gracefully handle failing to load music than just crashing utterly
     // Probably log an error (since this is happening on initialization you get to see the error)
     // and continue
