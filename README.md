@@ -2,10 +2,19 @@
 
 This mod plays the soundtrack composed by Ben Prunty for the game FTL inside Slay the Spire.
 
-Currently, you need to own the "FTL Soundtrack" DLC for FTL on Steam for it to work.
-I plan to add options that let you find the FTL Soundtrack in your music library as well,
-if you bought it on [Bandcamp](https://benprunty.bandcamp.com/album/ftl) or elsewhere.
+This mod does not include the FTL soundtrack.
 
-Most importantly, the dynamic soundtrack works: the battle themes will fade in when you're in
-combat, and will fade out during peacetime.
+Note that buying FTL won't give you the soundtrack; you need to buy it
+separately. Steam offers it as DLC. In addition, you can buy it on
+[Bandcamp](https://benprunty.bandcamp.com/album/ftl).
 
+The mod will scan for the soundtrack in the FTL directory in your Steam Library
+if you have it installed, but otherwise you'll have to scan for it
+manually. Please let me know if you have any problems getting the soundtrack
+recognized.
+
+# Attribution
+
+The FTL soundtrack is by Ben Prunty. You can buy it on [Bandcamp](https://benprunty.bandcamp.com/album/ftl) or elsewhere.
+
+The [music icon used in the mod settings](https://thenounproject.com/search/?q=music&i=2491933#) is by Arif Arif and is from the Noun Project.
