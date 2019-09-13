@@ -73,15 +73,26 @@ public class MusicFileList {
    * @throws CouldNotFindMusicException if some or all of the files can't be found.
    */
   public static MusicFileList initialize(String subdirectory) throws CouldNotFindMusicException {
+    return initialize(Paths.get(subdirectory));
+  }
+
+  /**
+   * Initialize a new MusicFileList, finding all the files in this subdirectory.
+   *
+   * @param subdirectory The full path to a subdirectory.
+   * @throws CouldNotFindMusicException if some or all of the files can't be found.
+   */
+  public static MusicFileList initialize(Path subdirectory) throws CouldNotFindMusicException {
     Stream<Path> fileWalk;
     try {
-      fileWalk = Files.walk(Paths.get(subdirectory));
+      fileWalk = Files.walk(subdirectory);
     } catch (IOException e) {
       throw new CouldNotFindMusicException(
           "Could not load directory. Check if this directory is correct.",
-          subdirectory, e);
+          subdirectory.toString(), e);
     } catch (InvalidPathException e) {
-      throw new CouldNotFindMusicException("Failed to load (not a directory)", subdirectory, e);
+      throw new CouldNotFindMusicException(
+          "Failed to load (not a directory)", subdirectory.toString(), e);
     }
 
     HashMap<Song, Path> songFiles = new HashMap<>();
@@ -116,9 +127,11 @@ public class MusicFileList {
     } catch (UncheckedIOException e) {
       if (e.getCause() instanceof AccessDeniedException) {
         throw new CouldNotFindMusicException(
-            "Access denied; try using a more specific directory.", subdirectory, e.getCause());
+            "Access denied; try using a more specific directory.",
+            subdirectory.toString(), e.getCause());
       }
-      throw new CouldNotFindMusicException("We ran into trouble finding music files", subdirectory, e);
+      throw new CouldNotFindMusicException(
+          "We ran into trouble finding music files", subdirectory.toString(), e);
     }
 
     HashSet<Song> missing = new HashSet<>(Arrays.asList(Song.values()));
@@ -127,14 +140,14 @@ public class MusicFileList {
       if (missing.size() == Song.values().length) {
         throw new CouldNotFindMusicException(
             "Could not find any songs. Make sure the songs are MP3 files and in the given " +
-                "directory.", subdirectory);
+                "directory.", subdirectory.toString());
       }
       // TODO: Add troubleshooting link
       throw new CouldNotFindMusicException(
           String.format(
               "Failed to find %d out of %d songs, including %s. Make sure all songs are present",
               missing.size(), Song.values().length, missing.iterator().next()),
-          subdirectory);
+          subdirectory.toString());
     }
 
     // Note: We already got the music files.

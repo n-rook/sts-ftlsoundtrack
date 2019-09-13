@@ -9,6 +9,8 @@ import org.bomz.sts.ftlsoundtrack.audio.DualMusicPlayer.MusicMode;
 import org.bomz.sts.ftlsoundtrack.audio.MusicSupplier;
 import org.bomz.sts.ftlsoundtrack.audio.patch.MusicPatch;
 
+import static basemod.DevConsole.logger;
+
 public class FtlSoundtrackInitializer implements
     PostInitializeSubscriber, OnStartBattleSubscriber, PostBattleSubscriber {
   private static DualMusicPlayer player;
@@ -17,7 +19,12 @@ public class FtlSoundtrackInitializer implements
   public void receivePostInitialize() {
     ModSettings.initialize();
     ModSettings settings = ModSettings.getInstance();
-    settings.load();
+    try {
+      settings.load();
+    } catch (RuntimeException e) {
+      logger.error("Failed to load settings!", e);
+    }
+
     // TODO: More gracefully handle failing to load music than just crashing utterly
     // Probably log an error (since this is happening on initialization you get to see the error)
     // and continue

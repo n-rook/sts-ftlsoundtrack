@@ -24,8 +24,9 @@ public class MusicScanners {
     }
 
     logger.info(String.format("Home directory is %s", home));
+    Path musicDirectory = Paths.get(home).resolve("Music");
 
-    return MusicFileList.initialize(home);
+    return MusicFileList.initialize(musicDirectory);
   }
 
   public static MusicFileList scanSteamLibrary() throws MusicFileList.CouldNotFindMusicException {
@@ -39,7 +40,7 @@ public class MusicScanners {
     Path ftlPath = Paths.get(stsRoot).getParent().resolve("FTL Faster Than Light").normalize();
     logger.info(String.format("Expected FTL path is %s", ftlPath.toString()));
 
-    return MusicFileList.initialize(ftlPath.toString());
+    return MusicFileList.initialize(ftlPath);
   }
 
   public static MusicFileList scanClipboard() throws MusicFileList.CouldNotFindMusicException {
