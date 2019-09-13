@@ -137,7 +137,7 @@ public class ModSettingsController {
       elements.addAll(addLabeledScanButton(
           1,
           panel,
-          "Scan for FTL soundtrack in Steam Library (FTL soundtrack must be purchased separately; only works if FTL and STS are in the same library)",
+          "Scan for FTL soundtrack in Steam Library (same library only)",
           button -> controller.scanSteamLibrary()
       ));
       elements.addAll(addLabeledScanButton(

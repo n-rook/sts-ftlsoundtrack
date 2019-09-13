@@ -136,7 +136,6 @@ public class DualMusicPlayer {
      */
     public void stop() {
       this.currentAudio.stop();
-      // Now the onCompletion handler will never run...... right?
     }
 
     /**
@@ -150,7 +149,6 @@ public class DualMusicPlayer {
 
     private void onCompletion() {
       logger.info("Running onCompletion handler for audio");
-      // TODO: dispose of currentAudio
 
       MusicBeingPlayed previousAudio = this.currentAudio;
       this.currentAudio = upNext;

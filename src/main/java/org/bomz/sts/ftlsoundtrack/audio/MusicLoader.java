@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import static basemod.DevConsole.logger;
 
 public class MusicLoader {
-  private static final String FTL_PATH = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\FTL Faster Than Light";
 
   private static Music loadExternalMusic(String path) {
     if (Gdx.audio == null) {

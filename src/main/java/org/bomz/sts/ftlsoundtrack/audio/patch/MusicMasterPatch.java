@@ -13,12 +13,6 @@ public class MusicMasterPatch {
   // music methods are called! Otherwise we throw an error.
   private static MusicMasterShim _shim = null;
 
-  private static final String KEY_MENU = "MENU";
-  private static final String KEY_EXORDIUM = "Exordium";
-  private static final String KEY_CITY = "TheCity";
-  private static final String KEY_BEYOND = "TheBeyond";
-  private static final String KEY_ENDING = "TheEnding";
-
   static void setShim(MusicMasterShim shim) {
     MusicMasterPatch._shim = shim;
   }

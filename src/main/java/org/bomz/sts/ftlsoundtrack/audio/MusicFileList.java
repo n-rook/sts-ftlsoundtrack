@@ -1,10 +1,8 @@
 package org.bomz.sts.ftlsoundtrack.audio;
 
-import basemod.BaseMod;
 import org.bomz.sts.ftlsoundtrack.audio.MusicSupplier.Song;
 import org.bomz.sts.ftlsoundtrack.audio.MusicSupplier.SongPair;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.*;
@@ -95,10 +93,15 @@ public class MusicFileList {
             if (filename == null) {
               return false;
             }
-            return IS_MUSIC.matcher(filename).matches();
+            boolean isMusic = IS_MUSIC.matcher(filename).matches();
+            if (!isMusic) {
+              logger.info("Ignoring {}; not MP3", path.toString());
+            }
+            return isMusic;
           }).forEach(path -> {
         Song song = getMatchingSongOrNull(path);
         if (song == null) {
+          logger.info("Ignoring {}, did not recognize song name", path.toString());
           return;
         }
 
@@ -107,6 +110,7 @@ public class MusicFileList {
           return;
         }
 
+        logger.info("Recognized {} as {}", path.toString(), song.toString());
         songFiles.put(song, path);
       });
     } catch (UncheckedIOException e) {
@@ -189,7 +193,7 @@ public class MusicFileList {
 
     this.files = Collections.unmodifiableMap(
         files.entrySet().stream()
-            .collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue().toAbsolutePath())));
+            .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toAbsolutePath())));
   }
 
   /**
