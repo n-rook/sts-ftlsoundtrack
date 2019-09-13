@@ -13,6 +13,7 @@
         <steam.path.sts>${steam.path}/common/SlayTheSpire</steam.path.sts>
         <steam.path.stsworkshop>${steam.path}/workshop/content/646570</steam.path.stsworkshop>
         <steam.path.moddirectory>${steam.path.sts}/mods</steam.path.moddirectory>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>

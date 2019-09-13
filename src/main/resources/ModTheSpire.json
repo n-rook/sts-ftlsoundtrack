@@ -2,9 +2,10 @@
   "modid": "ftlsoundtrack",
   "name": "FTL Soundtrack",
   "author_list": ["Nate Rook"],
-  "description": "Swaps out Slay the Spire's soundtrack for FTL's.",
+  "credits": "Ben Prunty - wrote the FTL soundtrack\nArif Arif (Noun Project) - mod icon",
+  "description": "Plays the soundtrack for the game FTL inside Slay the Spire.\n\nThe FTL soundtrack is not included, and must be purchased separately. Currently we only support playing the MP3 version, so if you have it in a different format you'll have to convert it to MP3 files.",
   "version": "0.1",
-  "sts_version": "07-05-2019",
-  "mts_version": "2.6.0",
+  "sts_version": "07-17-2019",
+  "mts_version": "3.13.1",
   "dependencies": ["basemod"]
 }
