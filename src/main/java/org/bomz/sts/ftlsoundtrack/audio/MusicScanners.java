@@ -15,6 +15,8 @@ public class MusicScanners {
   // static
   private MusicScanners() {}
 
+  private static final String SLAY_THE_SPIRE_DIRECTORY = "SlayTheSpire";
+
   public static MusicFileList scanMusicLibrary() throws MusicFileList.CouldNotFindMusicException {
     String home = System.getProperty("user.home");
 
@@ -27,6 +29,29 @@ public class MusicScanners {
     Path musicDirectory = Paths.get(home).resolve("Music");
 
     return MusicFileList.initialize(musicDirectory);
+  }
+
+  private static Path tryGetStsRoot() {
+    String stsRootString = System.getProperty("user.dir");
+    if (stsRootString == null) {
+      return null;
+    }
+
+    // On Windows stsRootString is just what we want. On a Mac, though, it's
+    // something like .../Steam/steamapps/common/SlayTheSpire/SlayTheSpire.app/Contents.
+    // So we go up the directory tree until we find "SlayTheSpire".
+    Path stsRoot = Paths.get(stsRootString).toAbsolutePath();
+    for (
+        Path current = stsRoot;
+        current != null;
+        current = current.getParent()) {
+      if (current.getFileName().toString().equalsIgnoreCase(SLAY_THE_SPIRE_DIRECTORY)) {
+        return current;
+      }
+    }
+
+    logger.warn("Could not find SlayTheSpire in ancestry of {}", stsRootString);
+    return null;
   }
 
   public static MusicFileList scanSteamLibrary() throws MusicFileList.CouldNotFindMusicException {
