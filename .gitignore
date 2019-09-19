@@ -25,5 +25,10 @@ hs_err_pid*
 # IntelliJ settings
 .idea/
 
+# Uploader artifacts
+sendToDevs
+steam_appid.txt
+ftlsoundtrack/sendToDevs
+
 # Build targets
 target/
