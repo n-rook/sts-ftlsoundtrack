@@ -55,14 +55,14 @@ public class MusicScanners {
   }
 
   public static MusicFileList scanSteamLibrary() throws MusicFileList.CouldNotFindMusicException {
-    String stsRoot = System.getProperty("user.dir");
+    Path stsRoot = tryGetStsRoot();
 
     if (stsRoot == null) {
       throw new MusicFileList.CouldNotFindMusicException(
           "Could not find Slay the Spire root directory. Try loading from the clipboard.");
     }
-    logger.info(String.format("STS root is %s", stsRoot));
-    Path ftlPath = Paths.get(stsRoot).getParent().resolve("FTL Faster Than Light").normalize();
+    logger.info("STS root is {}", stsRoot.toString());
+    Path ftlPath = stsRoot.getParent().resolve("FTL Faster Than Light").normalize();
     logger.info(String.format("Expected FTL path is %s", ftlPath.toString()));
 
     return MusicFileList.initialize(ftlPath);
